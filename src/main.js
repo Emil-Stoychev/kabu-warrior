@@ -126,6 +126,12 @@ k.loadSprite('assets', './assets/topdownasset.png', {
             to: 974,
             loop: true,
         },
+        // FIRE ANIMATION
+        'fire-anim': {
+            from: 489,
+            to: 490,
+            loop: true,
+        },
 
     }
 })

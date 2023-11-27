@@ -295,10 +295,28 @@ export default async function world(k) {
           continue;
         }
 
+        if (object.name === "fire") {
+          let fire = map.add([
+            k.sprite("assets", {
+              frame: 489,
+              anim: 'fire-anim',
+            }),
+            k.area({ shape: new k.Rect(k.vec2(4, 4), 8, 5) }),
+            k.body({ isStatic: true }),
+            k.pos(object.x, object.y),
+            "fire",
+          ]);
+
+          fire.onCollide("player", (player) => {
+            onFireCollideWithPlayer(k, player);
+          });
+          continue;
+        }
+
         if (object.name === "missionPerson") {
           let missionPerson = map.add([
             k.sprite("assets", {
-              frame: 944,
+              frame: 489,
             }),
             k.area({shape: new k.Rect(k.vec2(3, 4), 10, 14)}),
             k.body({ isStatic: true }),
@@ -385,10 +403,6 @@ export default async function world(k) {
   entities.player.onCollide("door-entrance", () => {
     gameState.playSound('door')
     k.go("house");
-  });
-
-  entities.player.onCollide("fire", () => {
-      onFireCollideWithPlayer(k, entities.player);
   });
 
   entities.player.onCollide("dungeon-door-entrance", () => {
