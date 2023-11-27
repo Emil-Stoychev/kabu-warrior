@@ -316,7 +316,7 @@ export default async function world(k) {
         if (object.name === "missionPerson") {
           let missionPerson = map.add([
             k.sprite("assets", {
-              frame: 489,
+              frame: 944,
             }),
             k.area({shape: new k.Rect(k.vec2(3, 4), 10, 14)}),
             k.body({ isStatic: true }),
