@@ -186,7 +186,7 @@ export async function bossHealth(k, health) {
   k.destroyAll("gamePauseTextContainer");
   k.destroyAll("bossHealth");
 
-    k.add(
+    let healthBossText = k.add(
       [
         k.text(health, {
           size: 32,
@@ -201,4 +201,8 @@ export async function bossHealth(k, health) {
       ],
       "bossHealth"
     );
+
+    k.wait(3, () => {
+      k.destroy(healthBossText);
+    });
 }
