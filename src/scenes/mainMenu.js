@@ -11,7 +11,7 @@ export default async function mainMenu(k) {
   k.add([k.sprite("logo"), k.pos(150, 0)]);
   let getLocalStorage = JSON.parse(localStorage.getItem('sessionGame'))
 
-  if(getLocalStorage.health != null) {
+  if(getLocalStorage != null) {
     let resumeGame = k.add([
     k.text(menuText[currentLocale].resume, { size: 32, font: "gameboy" }),
     k.area(),
