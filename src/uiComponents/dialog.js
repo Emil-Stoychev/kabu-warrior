@@ -35,7 +35,8 @@ export async function dialog(k, pos, content) {
   let lineFinishedDisplayed = true
   gameState.stopSound('typingText')
   
-  const dialogKey = k.onKeyPress('space', async () => {
+  const dialogKey = k.onKeyPress(async (key) => {
+    if(key != 'space' && key != 'enter') return
     if(!lineFinishedDisplayed) return;
 
     index++
