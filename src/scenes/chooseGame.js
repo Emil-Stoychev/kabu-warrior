@@ -1,6 +1,6 @@
 import menuText from "../content/menuText.js";
 import optionsText from "../content/optionsText.js";
-import { gameState } from "../state/stateManagers.js";
+import { gameState, playerState } from "../state/stateManagers.js";
 import { colorizeBackground } from "../utils.js";
 
 export default async function chooseGame(k) {
@@ -35,6 +35,9 @@ export default async function chooseGame(k) {
   ]);
 
   classic.onClick(() => {
+    gameState.clearGameStatusAfterSetNewGame()
+    playerState.clearPlayerStatusAfterSetNewGame()
+    localStorage.removeItem('sessionGame')
     gameState.playSound("tap");
     gameState.stopSound('mainMenuTrack')
     gameState.setIsHardcore(false);
@@ -42,6 +45,9 @@ export default async function chooseGame(k) {
   });
 
   hardcore.onClick(() => {
+    gameState.clearGameStatusAfterSetNewGame()
+    playerState.clearPlayerStatusAfterSetNewGame()
+    localStorage.removeItem('sessionGame')
     gameState.playSound("tap");
     gameState.stopSound('mainMenuTrack')
     gameState.setIsHardcore(true);

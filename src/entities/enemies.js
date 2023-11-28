@@ -114,7 +114,7 @@ export function setEnemyAI(k, enemy, option, player) {
   const right = enemy.onStateEnter("right", async () => {
     enemy.flipX = false;
     const updateRef = k.onUpdate(() => {
-      if (player.pos.dist(enemy.pos) < 50) {
+      if (player?.pos?.dist(enemy.pos) < 50) {
         if (option === "slime") gameState.playSound("slimeSound");
         if (option === "frog") gameState.playSound("frogSound");
         if (option === "bunny") gameState.playSound("bunnySound");
@@ -130,7 +130,7 @@ export function setEnemyAI(k, enemy, option, player) {
   const left = enemy.onStateEnter("left", async () => {
     enemy.flipX = true;
     const updateRef = k.onUpdate(() => {
-      if (player.pos.dist(enemy.pos) < 50) {
+      if (player?.pos?.dist(enemy.pos) < 50) {
         if (option === "slime") gameState.playSound("slimeSound");
         if (option === "frog") gameState.playSound("frogSound");
         if (option === "bunny") gameState.playSound("bunnySound");
@@ -146,7 +146,7 @@ export function setEnemyAI(k, enemy, option, player) {
   const down = enemy.onStateEnter("down", async () => {
     playAnimIfNotPlaying(enemy, `${option}-down`);
     const updateRef = k.onUpdate(() => {
-      if (player.pos.dist(enemy.pos) < 50) {
+      if (player?.pos?.dist(enemy.pos) < 50) {
         if (option === "slime") gameState.playSound("slimeSound");
         if (option === "frog") gameState.playSound("frogSound");
         if (option === "bunny") gameState.playSound("bunnySound");
@@ -161,7 +161,7 @@ export function setEnemyAI(k, enemy, option, player) {
   const up = enemy.onStateEnter("up", async () => {
     playAnimIfNotPlaying(enemy, `${option}-up`);
     const updateRef = k.onUpdate(() => {
-      if (player.pos.dist(enemy.pos) < 50) {
+      if (player?.pos?.dist(enemy.pos) < 50) {
         if (option === "slime") gameState.playSound("slimeSound");
         if (option === "frog") gameState.playSound("frogSound");
         if (option === "bunny") gameState.playSound("bunnySound");

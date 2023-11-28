@@ -1,4 +1,5 @@
 const EN = {
+  resume: "RESUME",
   title: "NEW GAME",
   classic: 'CLASSIC',
   hardcore: 'HARDCORE',
@@ -8,6 +9,7 @@ const EN = {
 };
 
 const BG = {
+  resume: "ПРОДЪЛЖИ",
   title: "НОВА ИГРА",
   classic: 'КЛАСИЧЕСКА',
   hardcore: 'ЕКСТРЕМЕН',

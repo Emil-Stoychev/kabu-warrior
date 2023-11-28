@@ -9,6 +9,21 @@ export default async function mainMenu(k) {
   gameState.playSound('mainMenuTrack')
 
   k.add([k.sprite("logo"), k.pos(150, 0)]);
+  let getLocalStorage = JSON.parse(localStorage.getItem('sessionGame'))
+
+  if(getLocalStorage.health != null) {
+    let resumeGame = k.add([
+    k.text(menuText[currentLocale].resume, { size: 32, font: "gameboy" }),
+    k.area(),
+    k.anchor("center"),
+    k.pos(k.center().x, k.center().y - 60),
+  ]);
+
+  resumeGame.onClick(() => {
+    gameState.playSound("tap");
+    k.go("house");
+  });
+}
 
   let newGame = k.add([
     k.text(menuText[currentLocale].title, { size: 32, font: "gameboy" }),

@@ -24,6 +24,7 @@ export function generatePlayerComponents(k, pos) {
 }
 
 export function setPlayerMovement(k, player) {
+    if(!player?.speed) return
     k.onKeyDown((key) => {
             if(gameState.getFreezePlayer()) return
             let speed = playerState.getSpeed()

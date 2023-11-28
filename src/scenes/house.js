@@ -30,8 +30,9 @@ export default async function house(k) {
 
   const entities = {
     oldMan: null,
-    player: null,
   };
+  let player = null
+  // let player = playerState.getPlayer();
 
   const layers = mapData?.layers;
 
@@ -43,7 +44,7 @@ export default async function house(k) {
     if (layer.name === "SpawnPoints") {
       for (const object of layer.objects) {
         if (object.name === "player") {
-          entities.player = map.add(
+          player = map.add(
             generatePlayerComponents(k, k.vec2(object.x, object.y))
           );
           continue;
@@ -68,13 +69,25 @@ export default async function house(k) {
     gameState.setFirstWelcome()
   }
 
-  k.camScale(4);
-  k.camPos(entities.player.worldPos());
   k.onUpdate(() => {
-    if (entities.player.pos.dist(k.camPos())) {
+    if (playerState && gameState) {
+      if (playerState.hasPlayerStateChanged() || gameState.hasGameStateChanged()) {
+        let data = {
+          ...playerState.getDataForStorageFromPlayerState(),
+          ...gameState.getDataForStorageFromGlobalState()
+        };
+        localStorage.setItem("sessionGame", JSON.stringify(data));
+      }
+    }
+  });
+
+  k.camScale(4);
+  k.camPos(player.worldPos());
+  k.onUpdate(() => {
+    if (player.pos.dist(k.camPos())) {
       k.tween(
         k.camPos(),
-        entities.player.worldPos(),
+        player.worldPos(),
         0.15,
         (newPos) => {
           k.camPos(newPos);
@@ -83,7 +96,7 @@ export default async function house(k) {
       );
     }
   });
-  setPlayerMovement(k, entities.player);
+  setPlayerMovement(k, player);
 
   let increaseHealthPlayerLoop = k.loop(10, () => {
     if (playerState.getHealth() < playerState.getMaxHealth()) {
@@ -91,7 +104,7 @@ export default async function house(k) {
       gameState.playSound('heal')
       playerState.increaseHealthFromHouse();
       showDamage(k, 0.5, true, true)
-      playerUnits(k, entities.player)
+      playerUnits(k, player)
       healthBar(k);
     }
   });
@@ -100,17 +113,17 @@ export default async function house(k) {
     clearInterval(increaseHealthPlayerLoop);
   }
 
-  entities.player.onCollide("door-exit", () => {
+  player.onCollide("door-exit", () => {
     gameState.playSound("door");
     gameState.setPreviousScene("house");
     k.go("world");
   });
 
-  entities.player.onCollide("oldman", () => {
-    startInteraction(k, entities.oldMan, entities.player);
+  player.onCollide("oldman", () => {
+    startInteraction(k, entities.oldMan, player);
   });
 
-  entities.player.onCollideEnd("oldman", () => {
+  player.onCollideEnd("oldman", () => {
     playAnimIfNotPlaying(entities.oldMan, "oldman-down");
   });
 
@@ -127,7 +140,7 @@ export default async function house(k) {
   })
 
   k.destroyAll("weaponsContainer");
-  playerUnits(k, entities.player)
+  playerUnits(k, player)
   weapons(k);
   healthBar(k);
 }

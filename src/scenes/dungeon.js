@@ -33,9 +33,9 @@ export default async function dungeon(k) {
   const map = k.add([k.pos(420, 95)]);
 
   const entities = {
-    player: null,
     ghost: null,
   };
+  let player = null
 
   const layers = mapData?.layers;
 
@@ -47,7 +47,7 @@ export default async function dungeon(k) {
     if (layer.name === "SpawnPoints") {
       for (const object of layer.objects) {
         if (object.name === "player") {
-          entities.player = map.add(
+          player = map.add(
             generatePlayerComponents(k, k.vec2(object.x, object.y))
           );
           continue;
@@ -168,10 +168,22 @@ export default async function dungeon(k) {
     drawTiles(k, map, layer, mapData?.tileheight, mapData?.tilewidth);
   }
 
-  entities.player.pos.y -= 20;
-  setPlayerMovement(k, entities.player);
+  k.onUpdate(() => {
+    if (playerState && gameState) {
+      if (playerState.hasPlayerStateChanged() || gameState.hasGameStateChanged()) {
+        let data = {
+          ...playerState.getDataForStorageFromPlayerState(),
+          ...gameState.getDataForStorageFromGlobalState()
+        };
+        localStorage.setItem("sessionGame", JSON.stringify(data));
+      }
+    }
+  });
 
-  entities.player.onCollide("door-exit", () => {
+  player.pos.y -= 20;
+  setPlayerMovement(k, player);
+
+  player.onCollide("door-exit", () => {
     gameState.playSound("door");
     gameState.setPreviousScene("dungeon");
     gameState.stopSound("musicOnBossBattle");
@@ -179,7 +191,7 @@ export default async function dungeon(k) {
     k.go("world");
   });
 
-  entities.player.onCollide("door-entrance", async () => {
+  player.onCollide("door-entrance", async () => {
     if (!gameState.getIsGhostDefeated()) {
       gameState.playSound("musicToBossTransition");
       k.wait(10, () => {
@@ -188,20 +200,20 @@ export default async function dungeon(k) {
     }
     gameState.setFreezePlayer(true);
     await slideCamY(k, -180, gameState.getIsGhostDefeated() ? 1 : 12);
-    entities.player.pos.y -= 50;
+    player.pos.y -= 50;
     gameState.setFreezePlayer(false);
   });
 
-  entities.player.onCollide("door-exit-2", async () => {
+  player.onCollide("door-exit-2", async () => {
     if (!gameState.getIsGhostDefeated()) return;
     gameState.stopSound("musicOnBossBattle");
     gameState.setFreezePlayer(true);
     await slideCamY(k, 180, 1);
-    entities.player.pos.y += 50;
+    player.pos.y += 50;
     gameState.setFreezePlayer(false);
   });
 
-  entities.player.onCollide("prison-door", async (prisonDoor) => {
+  player.onCollide("prison-door", async (prisonDoor) => {
     await dialog(
       k,
       k.vec2(250, 500),
@@ -223,8 +235,8 @@ export default async function dungeon(k) {
   });
 
   if (entities.ghost) {
-    setGhostAI(k, entities.ghost, entities.player);
-    onAttacked(k, entities.ghost, entities.player);
+    setGhostAI(k, entities.ghost, player);
+    onAttacked(k, entities.ghost, player);
     onCollideWithPlayer(k, entities.ghost);
     onGhostDestroyed(k);
   }
@@ -243,7 +255,7 @@ export default async function dungeon(k) {
 
   k.camScale(4);
   k.destroyAll("weaponsContainer");
-  playerUnits(k, entities.player);
+  playerUnits(k, player);
   weapons(k);
   healthBar(k);
 }

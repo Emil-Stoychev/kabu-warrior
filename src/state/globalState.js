@@ -1,3 +1,4 @@
+import isEqual from "lodash/isEqual";
 import k from '../kaboomContext'
 import { gamePausedText, incompleteMission, missionSuccess } from '../uiComponents/centerTexts';
 import { playerUnits } from '../uiComponents/playerUnits';
@@ -6,6 +7,7 @@ import { Howl } from 'howler';
 
 export default function globalStateManager() {
   let instance = null;
+  let prevGameState = null;
 
   function createInstance() {
     let isHardore = false
@@ -30,7 +32,6 @@ export default function globalStateManager() {
     let locale = "EN";
     let fontSize = 28;
     let entities = {
-      player: null,
       slimes: [],
       frogs: [],
       bunnies: [],
@@ -83,8 +84,40 @@ export default function globalStateManager() {
       playerHurt2: new Howl({ src: ['./assets/sounds/playerHurt2.wav'], volume: 0.7 }),
     };
 
+    const storedData = localStorage.getItem('sessionGame');
+    if (storedData) {
+        const parsedData = JSON.parse(storedData);
+        isHardore = parsedData.isHardore || isHardore;
+        mute = parsedData.mute || mute;
+        isGhostDefeated = parsedData.isGhostDefeated || isGhostDefeated;
+        bossUnlocked = parsedData.bossUnlocked || bossUnlocked;
+        isSonSaved = parsedData.isSonSaved || isSonSaved;
+        currMissionNum = parsedData.currMissionNum || currMissionNum;
+        firstWelcome = parsedData.firstWelcome || firstWelcome;
+        missionsArray = parsedData.missionsArray || missionsArray;
+        locale = parsedData.locale || locale;
+    }
 
     return {
+      getDataForStorageFromGlobalState: () => {
+        return {
+          isHardore,
+          mute,
+          isGhostDefeated,
+          bossUnlocked,
+          isSonSaved,
+          currMissionNum,
+          firstWelcome,
+          missionsArray,
+          locale,
+        }
+      },
+      hasGameStateChanged: () => {
+        const currentGameState = instance.getDataForStorageFromGlobalState();
+        const hasChanged = !isEqual(prevGameState, currentGameState);
+        prevGameState = { ...currentGameState };
+        return hasChanged;
+      },
       setMute: () => {
         mute = !mute
 
@@ -140,11 +173,7 @@ export default function globalStateManager() {
       ,
       getEntities: () => entities,
       setNewEntity(key, obj) {
-        if (key === "player") {
-          entities[key] = obj;
-        } else {
           entities[key] = [...entities[key], obj];
-        }
       },
       getAllMissions: () => {
         return missionsArray
@@ -242,7 +271,6 @@ export default function globalStateManager() {
       },
       clearEntities() {
         entities = {
-            player: null,
             slimes: [],
             frogs: [],
             bunnies: [],
@@ -251,6 +279,7 @@ export default function globalStateManager() {
           };
       },
       resetGameStatus() {
+        prevGameState = null
         previousScene = null;
         nextScene = null;
         freezePlayer = false;
@@ -266,6 +295,23 @@ export default function globalStateManager() {
           {name: 'boss', complete: false, missionActive: false, currNum: 0, goal: 1, coins: 150, text: 'Kill the boss and save the\nperson inside the prison!'},
         ];
       }
+      },
+      clearGameStatusAfterSetNewGame() {
+        prevGameState = null
+        previousScene = null;
+        nextScene = null;
+        freezePlayer = false;
+        isGhostDefeated = false;
+        isSonSaved = false;
+        currMissionNum = 0
+        firstWelcome = 0
+        missionsArray = [
+          {name: 'slime', complete: false, missionActive: true, currNum: 0, goal: 1, level: 0, coins: 1, text: 'Kill slimes to complete the\nmission and get reward!'},
+          {name: 'frog', complete: false, missionActive: false, currNum: 0, goal: 1, level: 0, coins: 1, text: 'Kill frogs to complete the\nmission and get reward!'},
+          {name: 'bunny', complete: false, missionActive: false, currNum: 0, goal: 1, level: 0, coins: 1, text: 'Kill bunnies to complete the\nmission and get reward!'},
+          {name: 'ghost', complete: false, missionActive: false, currNum: 0, goal: 1, level: 0, coins: 1, text: 'Kill ghosts to complete the\nmission and get reward!'},
+          {name: 'boss', complete: false, missionActive: false, currNum: 0, goal: 1, coins: 150, text: 'Kill the boss and save the\nperson inside the prison!'},
+        ];
       },
       setFreezePlayer(value) {
         freezePlayer = value;
