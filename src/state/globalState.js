@@ -231,7 +231,7 @@ export default function globalStateManager() {
           if(currMissionNum >= missionsArray.length - 1) {
             let nextMission = missionsArray.find((x, i) => i === currMissionNum)
             if(nextMission?.name === 'boss') {
-              let findMissionWithLevelLowerThan5 = missionsArray.find(x => x?.level < 6) 
+              let findMissionWithLevelLowerThan5 = missionsArray.find(x => x?.level < 7) 
               if(findMissionWithLevelLowerThan5 && !isGhostDefeated && !isSonSaved) {
                 currMissionNum = 0
                 oldMissionNum = 0
