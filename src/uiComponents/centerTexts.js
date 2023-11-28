@@ -177,3 +177,28 @@ export async function gamePausedText(k, option) {
     k.destroyAll("gamePauseTextContainer");
   }
 }
+
+export async function bossHealth(k, health) {
+  k.destroyAll("notEnoughCoinsContainer");
+  k.destroyAll("maxLevelTextContainer");
+  k.destroyAll("incompleteMissionContainer");
+  k.destroyAll("missionSuccessContainer");
+  k.destroyAll("gamePauseTextContainer");
+  k.destroyAll("bossHealth");
+
+    k.add(
+      [
+        k.text(health, {
+          size: 32,
+          font: "gameboy",
+        }),
+        k.area(),
+        k.anchor("center"),
+        k.fixed(),
+        k.pos(k.vec2(k.width() / 2, k.height() / 2 - 150)),
+        k.z(201),
+        "bossHealth",
+      ],
+      "bossHealth"
+    );
+}

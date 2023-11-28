@@ -33,7 +33,7 @@ export function setGhostAI(k, ghost, player) {
     }
   });
 
-  onCollideWithPlayer(k, ghost)
+  onCollideWithPlayer(k, ghost, 'boss')
 
   k.loop(5, () => {
     ghost.prevPos = ghost.pos;

@@ -239,7 +239,7 @@ export default async function dungeon(k) {
 
   if (entities.ghost) {
     setGhostAI(k, entities.ghost, player);
-    onAttacked(k, entities.ghost, player);
+    onAttacked(k, entities.ghost, player, 'boss');
     onCollideWithPlayer(k, entities.ghost);
     onGhostDestroyed(k);
   }

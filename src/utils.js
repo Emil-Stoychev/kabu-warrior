@@ -5,6 +5,7 @@ import { playerState, oldManState, gameState } from "./state/stateManagers.js";
 import { showDamage } from "./uiComponents/damage.js";
 import { healthBar } from "./uiComponents/healthBar.js";
 import { playerUnits } from "./uiComponents/playerUnits.js";
+import { bossHealth } from './uiComponents/centerTexts.js';
 
 export async function fetchMapData(mapPath) {
   return await (await fetch(mapPath)).json();
@@ -111,6 +112,10 @@ export function onAttacked(k, entity, player, enemyName) {
 
     showDamage(k, numOfDamage)
     entity.hurt(numOfDamage)
+
+    if(enemyName === 'boss') {
+      bossHealth(k, entity.hp())
+    }
 
     if(entity.hp() <= 0) {
       let currMission = gameState.getCurrMission()
