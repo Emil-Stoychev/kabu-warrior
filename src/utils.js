@@ -1,3 +1,4 @@
+import { AES, enc } from 'crypto-js';
 import world from "./scenes/world.js";
 import { playerState, oldManState, gameState } from "./state/stateManagers.js";
 
@@ -235,4 +236,38 @@ export async function countdownTimer(k, timerValue) {
     timerValue -= 0.01;
   }
   k.destroy(timerText);
+}
+
+
+
+// Encryption function
+export function encryptData(data, key) {
+  const encryptedData = AES.encrypt(JSON.stringify(data), key).toString();
+  return encryptedData;
+}
+
+// Decryption function
+export function decryptData(encryptedData, key) {
+  const decryptedData = AES.decrypt(encryptedData, key).toString(enc.Utf8);
+  return JSON.parse(decryptedData);
+}
+
+// Save data to localStorage
+export function saveDataToLocalStorage(key, data, encryptionKey) {
+  const encryptedData = encryptData(data, encryptionKey);
+  localStorage.setItem(key, encryptedData);
+}
+
+// Retrieve data from localStorage
+export function getDataFromLocalStorage(key, encryptionKey) {
+  try {
+      const encryptedData = localStorage.getItem(key);
+      if (encryptedData) {
+          const decryptedData = decryptData(encryptedData, encryptionKey);
+          return decryptedData;
+      }
+  } catch (error) {
+      console.error("Error during decryption:", error.message);
+  }
+  return null;
 }

@@ -22,6 +22,7 @@ import {
   onAttacked,
   onCollideWithPlayer,
   onFireCollideWithPlayer,
+  saveDataToLocalStorage,
   slideCamY,
 } from "../utils.js";
 
@@ -170,15 +171,17 @@ export default async function dungeon(k) {
 
   k.onUpdate(() => {
     if (playerState && gameState) {
-      if (playerState.hasPlayerStateChanged() || gameState.hasGameStateChanged()) {
-        let data = {
-          ...playerState.getDataForStorageFromPlayerState(),
-          ...gameState.getDataForStorageFromGlobalState()
-        };
-        localStorage.setItem("sessionGame", JSON.stringify(data));
-      }
+        if (playerState.hasPlayerStateChanged() || gameState.hasGameStateChanged()) {
+            let data = {
+                ...playerState.getDataForStorageFromPlayerState(),
+                ...gameState.getDataForStorageFromGlobalState()
+            };
+
+            const encryptionKey = 'kabu-warrior-game-data'; // Replace with your actual key
+            saveDataToLocalStorage("sessionGame", data, encryptionKey);
+        }
     }
-  });
+});
 
   player.pos.y -= 20;
   setPlayerMovement(k, player);

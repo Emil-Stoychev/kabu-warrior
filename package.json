@@ -8,6 +8,7 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "crypto-js": "^4.2.0",
     "howler": "^2.2.4",
     "lodash": "^4.17.21"
   }

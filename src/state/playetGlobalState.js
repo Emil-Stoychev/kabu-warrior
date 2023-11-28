@@ -1,5 +1,6 @@
 import isEqual from "lodash/isEqual";
 import { gameState } from "./stateManagers";
+import { getDataFromLocalStorage } from "../utils";
 
 export default function playerGlobalStateManager() {
   let instance = null;
@@ -20,9 +21,9 @@ export default function playerGlobalStateManager() {
     let attackLevel = 0;
     let player = null;
 
-    const storedData = localStorage.getItem("sessionGame");
+    const storedData = getDataFromLocalStorage('sessionGame', 'kabu-warrior-game-data');
     if (storedData) {
-      const parsedData = JSON.parse(storedData);
+      const parsedData = storedData;
       isSwordEquipped = parsedData.isSwordEquipped || isSwordEquipped;
       isShieldEquipped = parsedData.isShieldEquipped || isShieldEquipped;
       armor = parsedData.armor || armor;
@@ -53,7 +54,7 @@ export default function playerGlobalStateManager() {
         const hasChanged = !isEqual(prevPlayerState, currentPlayerState);
         prevPlayerState = { ...currentPlayerState };
         return hasChanged;
-      },
+    },
       resetPlayerStatus() {
         prevPlayerState = null
         isPlayerWalking = false;

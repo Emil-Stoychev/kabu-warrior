@@ -1,6 +1,6 @@
 import menuText from "../content/menuText.js";
 import { gameState } from "../state/stateManagers.js";
-import { colorizeBackground } from "../utils.js";
+import { colorizeBackground, getDataFromLocalStorage } from "../utils.js";
 
 export default async function mainMenu(k) {
   const currentLocale = gameState.getLocale();
@@ -9,7 +9,7 @@ export default async function mainMenu(k) {
   gameState.playSound('mainMenuTrack')
 
   k.add([k.sprite("logo"), k.pos(150, 0)]);
-  let getLocalStorage = JSON.parse(localStorage.getItem('sessionGame'))
+  let getLocalStorage = getDataFromLocalStorage('sessionGame', 'kabu-warrior-game-data')
 
   if(getLocalStorage != null) {
     let resumeGame = k.add([

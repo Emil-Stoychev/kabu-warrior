@@ -19,6 +19,7 @@ import {
   drawTiles,
   fetchMapData,
   playAnimIfNotPlaying,
+  saveDataToLocalStorage,
 } from "../utils.js";
 
 export default async function house(k) {
@@ -71,15 +72,17 @@ export default async function house(k) {
 
   k.onUpdate(() => {
     if (playerState && gameState) {
-      if (playerState.hasPlayerStateChanged() || gameState.hasGameStateChanged()) {
-        let data = {
-          ...playerState.getDataForStorageFromPlayerState(),
-          ...gameState.getDataForStorageFromGlobalState()
-        };
-        localStorage.setItem("sessionGame", JSON.stringify(data));
-      }
+        if (playerState.hasPlayerStateChanged() || gameState.hasGameStateChanged()) {
+            let data = {
+                ...playerState.getDataForStorageFromPlayerState(),
+                ...gameState.getDataForStorageFromGlobalState()
+            };
+
+            const encryptionKey = 'kabu-warrior-game-data'; // Replace with your actual key
+            saveDataToLocalStorage("sessionGame", data, encryptionKey);
+        }
     }
-  });
+});
 
   k.camScale(4);
   k.camPos(player.worldPos());

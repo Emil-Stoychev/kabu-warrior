@@ -4,6 +4,7 @@ import { gamePausedText, incompleteMission, missionSuccess } from '../uiComponen
 import { playerUnits } from '../uiComponents/playerUnits';
 import { playerState } from './stateManagers';
 import { Howl } from 'howler';
+import { getDataFromLocalStorage } from "../utils";
 
 export default function globalStateManager() {
   let instance = null;
@@ -84,9 +85,9 @@ export default function globalStateManager() {
       playerHurt2: new Howl({ src: ['./assets/sounds/playerHurt2.wav'], volume: 0.7 }),
     };
 
-    const storedData = localStorage.getItem('sessionGame');
+    const storedData = getDataFromLocalStorage('sessionGame', 'kabu-warrior-game-data');
     if (storedData) {
-        const parsedData = JSON.parse(storedData);
+        const parsedData = storedData;
         isHardore = parsedData.isHardore || isHardore;
         mute = parsedData.mute || mute;
         isGhostDefeated = parsedData.isGhostDefeated || isGhostDefeated;
