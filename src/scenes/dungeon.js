@@ -140,7 +140,7 @@ export default async function dungeon(k) {
 
 
         if (object.name === "son") {
-          if (!gameState.getIsGhostDefeated() || !gameState.setIsSonSaved()) {
+          if (!gameState.getIsGhostDefeated() || !gameState.getIsSonSaved()) {
             let son = map.add([
               k.sprite("assets", {
                 frame: 940,
