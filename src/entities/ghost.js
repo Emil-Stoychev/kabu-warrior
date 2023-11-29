@@ -137,7 +137,7 @@ export function onGhostDestroyed(k) {
 
       const fireRing = k.add([
         k.sprite("fire", { frame: 0 }),
-        k.pos(k.center().x + 4, k.center().y - 150),
+        k.pos(k.center().x - 12, k.center().y - 135),
         k.area(),
         "key",
       ]);
