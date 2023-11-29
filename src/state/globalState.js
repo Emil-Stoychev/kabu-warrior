@@ -3,8 +3,8 @@ import k from '../kaboomContext'
 import { gamePausedText, incompleteMission, missionSuccess } from '../uiComponents/centerTexts';
 import { playerUnits } from '../uiComponents/playerUnits';
 import { playerState } from './stateManagers';
-import { Howl } from 'howler';
 import { getDataFromLocalStorage } from "../utils";
+import allSounds from "./allSounds";
 
 export default function globalStateManager() {
   let instance = null;
@@ -40,53 +40,7 @@ export default function globalStateManager() {
       ghosts: [],
       boss: [],
     };
-    let sounds = {
-      background: new Howl({ src: ['./assets/sounds/background.wav'], loop: true }),
-      playerWalk: new Howl({ src: ['./assets/sounds/walk.wav'], volume: 0.3 }),
-      portalStart: new Howl({ src: ['./assets/sounds/loadingTransition.wav'], volume: 0.7 }),
-      door: new Howl({ src: ['./assets/sounds/door.wav'],  }),
-      fireball: new Howl({ src: ['./assets/sounds/fireball.wav'], volume: 0.1 }),
-      pauseGame: new Howl({ src: ['./assets/sounds/pauseGame.wav'], volume: 0.6 }),
-      pauseGameReversed: new Howl({ src: ['./assets/sounds/pauseGameReversed.mp3'], volume: 0.6 }),
-      heal: new Howl({ src: ['./assets/sounds/heal.mp3'], volume: 0.5 }),
-      fear: new Howl({ src: ['./assets/sounds/fear.wav'], volume: 0.5 }),
-      backpack: new Howl({ src: ['./assets/sounds/backpack.wav'],  }),
-      tap: new Howl({ src: ['./assets/sounds/tap.wav'],  }),
-      drinkPotion: new Howl({ src: ['./assets/sounds/drinkPotion.wav'],  }),
-      getCoin: new Howl({ src: ['./assets/sounds/coin.wav'],  }),
-      getWeapon: new Howl({ src: ['./assets/sounds/get-weapon.wav'],  }),
-      getKey: new Howl({ src: ['./assets/sounds/getKey.wav'],  }),
-      levelUp: new Howl({ src: ['./assets/sounds/levelUp.wav'],  }),
-      heartbeat: new Howl({ src: ['./assets/sounds/heartbeat.wav'], loop: true}),
-      bossAttack: new Howl({ src: ['./assets/sounds/boss-attack.wav'],  }),
-      yea: new Howl({ src: ['./assets/sounds/yea.wav'],  }),
-      frogSound0: new Howl({ src: ['./assets/sounds/frog0.wav'], volume: 0.5 }),
-      frogSound1: new Howl({ src: ['./assets/sounds/frog1.wav'], volume: 0.5 }),
-      slimeSound0: new Howl({ src: ['./assets/sounds/slime0.wav'], volume: 0.5 }),
-      slimeSound1: new Howl({ src: ['./assets/sounds/slime1.wav'], volume: 0.5 }),
-      bunnySound0: new Howl({ src: ['./assets/sounds/bunny0.wav'], volume: 0.5 }),
-      bunnySound1: new Howl({ src: ['./assets/sounds/bunny1.wav'], volume: 0.5 }),
-      ghostSound0: new Howl({ src: ['./assets/sounds/ghost0.wav'], volume: 0.3 }),
-      ghostSound1: new Howl({ src: ['./assets/sounds/ghost1.wav'], volume: 0.3 }),
-      bossDie: new Howl({ src: ['./assets/sounds/boss-die.wav'],  }),
-      musicToBossTransition: new Howl({ src: ['./assets/sounds/music-to-boss-transition.wav'],  }),
-      musicOnBossBattle: new Howl({ src: ['./assets/sounds/music-on-boss-fighting.wav'],  }),
-      mainMenuTrack: new Howl({ src: ['./assets/sounds/music-on-boss-fighting.wav'], volume: 0.3 }),
-      criticalDamage: new Howl({ src: ['./assets/sounds/criticalDamage.wav'],  }),
-      typingText: new Howl({ src: ['./assets/sounds/typingText.wav'] }),
-      chestOpened: new Howl({ src: ['./assets/sounds/chestOpened.wav'],  }),
-      getShield: new Howl({ src: ['./assets/sounds/getShield.wav'] }),
-      getSword: new Howl({ src: ['./assets/sounds/getSword.wav'] }),
-      gameOver: new Howl({ src: ['./assets/sounds/gameOver.wav']  }),
-      entityDie0: new Howl({ src: ['./assets/sounds/entity-die0.wav'], volume: 0.7 }),
-      entityDie1: new Howl({ src: ['./assets/sounds/entity-die1.wav'], volume: 0.7 }),
-      sword0: new Howl({ src: ['./assets/sounds/sword0.wav'], volume: 0.7 }),
-      sword1: new Howl({ src: ['./assets/sounds/sword1.wav'], volume: 0.7 }),
-      sword2: new Howl({ src: ['./assets/sounds/sword2.wav'], volume: 0.7 }),
-      playerHurt0: new Howl({ src: ['./assets/sounds/playerHurt0.wav'], volume: 0.7 }),
-      playerHurt1: new Howl({ src: ['./assets/sounds/playerHurt1.wav'], volume: 0.7 }),
-      playerHurt2: new Howl({ src: ['./assets/sounds/playerHurt2.wav'], volume: 0.7 }),
-    };
+    let sounds = allSounds()
 
     const storedData = getDataFromLocalStorage('sessionGame', 'kabu-warrior-game-data');
     if (storedData) {
@@ -135,10 +89,11 @@ export default function globalStateManager() {
           }
         } else {
           if(previousScene == 'dungeon' || previousScene == 'house' || previousScene == 'world') {
-            sounds['background'].play()
+              sounds['background'].play()
           }
         }
       },
+      getIsMuted: () => mute,
       getIsGamePaused: () => pauseGame,
       setIsGamePaused: () => {
         pauseGame = !pauseGame
@@ -165,7 +120,7 @@ export default function globalStateManager() {
             sounds['pauseGameReversed'].rate(2)
             sounds['pauseGameReversed'].play()
           }
-          if(!sounds['background'].playing()) {
+          if(!sounds['background'].playing() && !mute) {
             sounds['background'].play()
           }
           k.destroy(pauseScreen)
@@ -273,7 +228,7 @@ export default function globalStateManager() {
           if(oldMissionNum === currMissionNum) {
             incompleteMission(k)
           } else {
-            sounds['levelUp'].play()
+            if(!mute) sounds['levelUp'].play()
             missionSuccess(k)
           }
         }

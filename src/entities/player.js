@@ -118,9 +118,7 @@ export function areAnyOfTheseKeysDown(k, keys) {
     return false
 }
 
-
 // KEYS PRESS
-
 function playerMovementLogic(k, player, currentKey, expectedKey, excludedKeys, direction, moveVec2) {
     if(currentKey === expectedKey && !areAnyOfTheseKeysDown(k, excludedKeys)) {
         gameState.playSound('playerWalk')

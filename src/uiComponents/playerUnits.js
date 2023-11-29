@@ -77,6 +77,7 @@ function speed(k) {
 
 function healthPercentage(k, player) {
   k.destroyAll("healthPercentage");
+  let mute = gameState.getIsMuted()
   const currHealth = playerState.getHealth();
   const maxHealth = playerState.getMaxHealth();
   let healthPerc = (currHealth * 100) / maxHealth;
@@ -88,10 +89,10 @@ function healthPercentage(k, player) {
       player.speed = 40;
       k.camScale(5);
     }
-    if (!fear.playing()) {
+    if (!fear.playing() && !mute) {
       fear.play();
     }
-    if (!heartbeatSound.playing()) {
+    if (!heartbeatSound.playing() && !mute) {
       heartbeatSound.play();
     }
   } else {
