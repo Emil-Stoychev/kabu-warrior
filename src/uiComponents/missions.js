@@ -1,7 +1,19 @@
 import { gameState } from "../state/stateManagers.js";
+import { dialog } from "./dialog.js";
+
+let firstMissionDialog = {
+  EN: [
+    "Hey, good luck with the missions and the path to the boss!",
+    "Press I to see mission info",
+  ],
+  BG: [
+    "Хей, късмет с мисиите и пътят до главната цел!",
+    "Натисни I (И), за да видиш информация за мисията",
+  ],
+};
 
 export async function missions(k) {
-  let currMission = gameState.getCurrMission()
+  let currMission = gameState.getCurrMission();
   let items = [];
 
   let missionContainer = k.add([
@@ -35,7 +47,7 @@ export async function missions(k) {
           frame: 180,
           width: 50,
           height: 50,
-          flipX: true
+          flipX: true,
         }),
         k.fixed(),
         k.pos(k.vec2(k.width() / 2 - 380, k.height() / 2 - 140)), // Centered position
@@ -66,7 +78,7 @@ export async function missions(k) {
           frame: 180,
           width: 50,
           height: 50,
-          flipX: true
+          flipX: true,
         }),
         k.fixed(),
         k.pos(k.vec2(k.width() / 2 + 340, k.height() / 2 - 140)), // Centered position
@@ -79,7 +91,7 @@ export async function missions(k) {
     // CENTER TOP TEXT MISSION
     let centerTextMission = k.add(
       [
-        k.text('MISSIONS', {
+        k.text("MISSIONS", {
           size: 24,
           font: "gameboy",
         }),
@@ -148,9 +160,9 @@ export async function missions(k) {
 
     collect.onClick(() => {
       if (gameState.getIsGamePaused()) return;
-      gameState.playSound('tap')
-      gameState.collectCoins(k)
-      refreshItems(items)
+      gameState.playSound("tap");
+      gameState.collectCoins(k);
+      refreshItems(items);
     });
 
     items.push(sword);
@@ -180,13 +192,21 @@ export async function missions(k) {
 
   items.push(exit);
 
-  exit.onClick(() => {
+  exit.onClick(async () => {
     if (gameState.getIsGamePaused()) return;
     gameState.playSound("tap");
     k.destroy(missionContainer);
     items.forEach((child) => {
       k.destroy(child);
     });
+    if (gameState.getFirstMissionCount() == 0) {
+      gameState.setFirstMissionCount();
+      await dialog(
+        k,
+        k.vec2(250, 500),
+        firstMissionDialog[gameState.getLocale()]
+      );
+    }
     gameState.setFreezePlayer(false);
   });
 
@@ -194,11 +214,11 @@ export async function missions(k) {
 }
 
 function refreshItems(items) {
-  let newActiveMission = gameState.getCurrMission()
+  let newActiveMission = gameState.getCurrMission();
   // TEXT
-  items[7].text = newActiveMission.text
+  items[7].text = newActiveMission.text;
   // GOAL
-  items[8].text = `${newActiveMission.currNum} / ${newActiveMission.goal}`
+  items[8].text = `${newActiveMission.currNum} / ${newActiveMission.goal}`;
   // PRICE
-  items[9].text = `${newActiveMission.coins} COINS`
+  items[9].text = `${newActiveMission.coins} COINS`;
 }

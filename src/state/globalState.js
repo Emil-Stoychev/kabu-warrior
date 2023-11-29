@@ -23,6 +23,7 @@ export default function globalStateManager() {
     let isSonSaved = false;
     let currMissionNum = 0
     let firstWelcome = 0
+    let firstMission = 0
     let missionsArray = [
       {name: 'slime', complete: false, missionActive: true, currNum: 0, goal: 1, level: 0, coins: 1, text: 'Kill slimes to complete the\nmission and get reward!'},
       {name: 'frog', complete: false, missionActive: false, currNum: 0, goal: 1, level: 0, coins: 1, text: 'Kill frogs to complete the\nmission and get reward!'},
@@ -97,6 +98,7 @@ export default function globalStateManager() {
         firstWelcome = parsedData.firstWelcome || firstWelcome;
         missionsArray = parsedData.missionsArray || missionsArray;
         locale = parsedData.locale || locale;
+        firstMission = parsedData.firstMission || firstMission;
     }
 
     return {
@@ -111,6 +113,7 @@ export default function globalStateManager() {
           firstWelcome,
           missionsArray,
           locale,
+          firstMission
         }
       },
       hasGameStateChanged: () => {
@@ -171,6 +174,9 @@ export default function globalStateManager() {
       setIsHardcore: (value) => isHardore = value,
       getFirstWelcome: () => firstWelcome,
       setFirstWelcome: () => firstWelcome++
+      ,
+      getFirstMissionCount: () => firstMission,
+      setFirstMissionCount: () => firstMission++
       ,
       getEntities: () => entities,
       setNewEntity(key, obj) {
@@ -288,6 +294,7 @@ export default function globalStateManager() {
         isGhostDefeated = false;
         isSonSaved = false;
         currMissionNum = 0
+        firstMission = 0
         missionsArray = [
           {name: 'slime', complete: false, missionActive: true, currNum: 0, goal: 1, level: 0, coins: 1, text: 'Kill slimes to complete the\nmission and get reward!'},
           {name: 'frog', complete: false, missionActive: false, currNum: 0, goal: 1, level: 0, coins: 1, text: 'Kill frogs to complete the\nmission and get reward!'},
@@ -306,6 +313,7 @@ export default function globalStateManager() {
         isSonSaved = false;
         currMissionNum = 0
         firstWelcome = 0
+        firstMission = 0
         missionsArray = [
           {name: 'slime', complete: false, missionActive: true, currNum: 0, goal: 1, level: 0, coins: 1, text: 'Kill slimes to complete the\nmission and get reward!'},
           {name: 'frog', complete: false, missionActive: false, currNum: 0, goal: 1, level: 0, coins: 1, text: 'Kill frogs to complete the\nmission and get reward!'},
