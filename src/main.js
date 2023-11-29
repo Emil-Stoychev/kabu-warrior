@@ -135,6 +135,21 @@ k.loadSprite('assets', './assets/topdownasset.png', {
 
     }
 })
+
+// FIRE ASSET
+k.loadSprite('fire', './assets/fireasset.png', {
+    sliceX: 7,
+    sliceY: 0,
+    anims: {
+        'fire-ring': 0,
+        // FIRE ANIMATION
+        'fire-attack': {
+            from: 1,
+            to: 6,
+            loop: true,
+        },
+    }
+})
 // HEALTH BAR ASSETS
 k.loadSpriteAtlas("./assets/topdownasset.png", {
     'full-heart': {

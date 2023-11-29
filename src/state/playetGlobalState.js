@@ -17,6 +17,9 @@ export default function playerGlobalStateManager() {
     let health = maxHealth;
     let hasKey = false;
     let enemiesKilled = 0;
+    let rings = {
+      fireRing: { power: 1.5, equipped: false },
+    };
     let coins = 0;
     let attackLevel = 0;
     let player = null;
@@ -33,6 +36,7 @@ export default function playerGlobalStateManager() {
       enemiesKilled = parsedData.enemiesKilled || enemiesKilled;
       coins = parsedData.coins || coins;
       attackLevel = parsedData.attackLevel || attackLevel;
+      rings = parsedData.rings || rings
     }
 
     return {
@@ -47,6 +51,7 @@ export default function playerGlobalStateManager() {
           enemiesKilled,
           coins,
           attackLevel,
+          rings
         };
       },
       hasPlayerStateChanged: () => {
@@ -69,6 +74,9 @@ export default function playerGlobalStateManager() {
           enemiesKilled = 0;
           coins = 0;
           attackLevel = 0;
+          rings = {
+            fireRing: { power: 1.5, equipped: false },
+          }
         }
       },
       clearPlayerStatusAfterSetNewGame() {
@@ -84,6 +92,9 @@ export default function playerGlobalStateManager() {
         enemiesKilled = 0;
         coins = 0;
         attackLevel = 0;
+        rings = {
+          fireRing: { power: 1.5, equipped: false },
+        }
       },
       setNewPlayer(newPlayer) {
         player = newPlayer;
@@ -91,6 +102,16 @@ export default function playerGlobalStateManager() {
       getPlayer: () => player,
       setIsSwordEquipped(value) {
         isSwordEquipped = value;
+      },
+      getRing: (ring) => {
+        if(rings[ring]) {
+          return rings[ring]
+        }
+      },
+      setNewRing(newRing) {
+        if(rings[newRing]) {
+          rings[newRing].equipped = true
+        }
       },
       getIsSwordEquipped: () => isSwordEquipped,
       setIsShieldEquipped(value) {

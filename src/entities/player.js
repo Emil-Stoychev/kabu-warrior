@@ -94,12 +94,21 @@ export function setPlayerMovement(k, player) {
         playAnimIfNotPlaying(player, `player-attack-${player.direction}`)
     })
 
+    k.onKeyPress((key) => {
+        if (!playerState.getRing('fireRing').equipped) return;
+        if (key !== 'b' && key !== 'б') return;
+        if (player.isAttacking) return;
+        if (gameState.getFreezePlayer()) return;
+        if (!playerState.getIsSwordEquipped()) return;
+    });
+    
     k.onKeyRelease(() => {
         gameState.stopSound('playerWalk')
         player.isAttacking = false
         player.stop()
     })
 }
+
 
 export function areAnyOfTheseKeysDown(k, keys) {
     for(const key of keys) {

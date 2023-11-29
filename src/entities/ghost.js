@@ -1,5 +1,8 @@
+import ringsDialogue from "../content/ringsDialogue.js";
 import { gameState, playerState } from "../state/stateManagers.js";
+import { dialog } from "../uiComponents/dialog.js";
 import { playerUnits } from "../uiComponents/playerUnits.js";
+import { weapons } from "../uiComponents/weapons.js";
 import { onCollideWithPlayer } from "../utils.js";
 
 const directionalStates = ["right", "backtrack", "attack", "evade"];
@@ -130,6 +133,27 @@ export function onGhostDestroyed(k) {
       prisonKey.onCollide("player", () => {
         gameState.playSound('getKey')
         playerState.setHasKey(true), k.destroy(prisonKey);
+      });
+
+      const fireRing = k.add([
+        k.sprite("fire", { frame: 0 }),
+        k.pos(k.center().x + 4, k.center().y - 150),
+        k.area(),
+        "key",
+      ]);
+
+      fireRing.onCollide("player", async () => {
+        gameState.setFreezePlayer(true)
+        playerState.setNewRing('fireRing')
+        gameState.playSound('getWeapon')
+        k.destroy(fireRing);
+        await dialog(
+          k,
+          k.vec2(250, 500),
+          ringsDialogue[gameState.getLocale()][0]
+        );
+        k.destroyAll('weaponsContainer');
+        weapons(k)
       });
     });
   });
