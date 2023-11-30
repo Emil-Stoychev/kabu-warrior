@@ -7,6 +7,7 @@ export async function playerUnits(k, player) {
   attackPowerUnit(k);
   healthPercentage(k, player);
   speed(k);
+  sideSlots(k)
 }
 
 function armor(k) {
@@ -265,4 +266,19 @@ function attackLevelUp(k) {
   k.wait(5, () => {
     k.destroy(attackLevelUp);
   });
+}
+
+function sideSlots(k) {
+  k.destroyAll("sideSlotsContainer");
+
+  k.add([
+    k.sprite("sideSlots", {
+      width: 60,
+      height: 220
+    }),
+    k.anchor('topleft'),
+    k.opacity(0.5),
+    k.fixed(),
+    k.pos(0, k.height() / 3),
+  ], 'sideSlotsContainer');
 }

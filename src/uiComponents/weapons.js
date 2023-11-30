@@ -16,7 +16,7 @@ export function weapons(k) {
       k.area({ shape: new k.Rect(k.vec2(3, 4), 10, 12) }),
       k.anchor('topleft'),
       k.fixed(),
-      k.pos(20, 80),
+      k.pos(10, 250),
       k.z(100),
     ], 'weaponsContainer');
   }
@@ -31,7 +31,7 @@ export function weapons(k) {
       k.area({ shape: new k.Rect(k.vec2(3, 4), 10, 12) }),
       k.anchor('topleft'),
       k.fixed(),
-      k.pos(70, 80),
+      k.pos(7.5, 300),
       k.z(100),
     ], 'weaponsContainer');
   }
@@ -40,13 +40,13 @@ export function weapons(k) {
     weaponsContainer.add([
       k.sprite("fire", {
         frame: 0,
-        width: 45,
-        height: 45
+        width: 50,
+        height: 50
       }),
       k.area({ shape: new k.Rect(k.vec2(3, 4), 10, 12) }),
       k.anchor('topleft'),
       k.fixed(),
-      k.pos(20, 130),
+      k.pos(9, 352),
       k.z(100),
     ], 'weaponsContainer');
   }

@@ -142,6 +142,10 @@ k.loadSprite('fire', './assets/fireasset.png', {
         },
     }
 })
+
+// SIDE SLOTS ASSET
+k.loadSprite('sideSlots', './assets/side-slots.png', {
+})
 // HEALTH BAR ASSETS
 k.loadSpriteAtlas("./assets/topdownasset.png", {
     'full-heart': {
