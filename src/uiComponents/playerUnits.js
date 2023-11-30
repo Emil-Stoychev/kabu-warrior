@@ -1,6 +1,7 @@
 import { gameState, playerState } from "../state/stateManagers.js";
 
 export async function playerUnits(k, player) {
+  backgroundUnits(k)
   armor(k);
   coins(k);
   enemiesKilled(k);
@@ -23,22 +24,13 @@ function armor(k) {
       : "MAX";
 
   k.add([
-    k.text(`${text} :ARMOR`, {
+    k.text(`ARMOR: ${text}`, {
       size: 16,
       font: "gameboy",
     }),
     k.fixed(),
-    k.pos(
-      k.width() -
-        (text === "STANDART"
-          ? 250
-          : text === "MEDIUM"
-          ? 220
-          : text === "STRONG"
-          ? 220
-          : 170),
-      k.height() - 20
-    ),
+    k.pos(20, k.height() - 80),
+
     "armorContainer",
   ]);
 }
@@ -56,22 +48,13 @@ function speed(k) {
       : "MAX";
 
   k.add([
-    k.text(`${text} :SPEED`, {
+    k.text(`SPEED: ${text}`, {
       size: 16,
       font: "gameboy",
     }),
     k.fixed(),
-    k.pos(
-      k.width() -
-        (text === "STANDART"
-          ? 250
-          : text === "FAST"
-          ? 185
-          : text === "VERY FAST"
-          ? 260
-          : 170),
-      k.height() - 50
-    ),
+    k.pos(20, k.height() - 110),
+
     "speedContainer",
   ]);
 }
@@ -109,12 +92,12 @@ function healthPercentage(k, player) {
     }
   }
   k.add([
-    k.text(`${healthPerc.toFixed(2)}% :HEALTH`, {
+    k.text(`HEALTH: ${healthPerc.toFixed(2)}%`, {
       size: 16,
       font: "gameboy",
     }),
     k.fixed(),
-    k.pos(k.width() - (healthPerc < 100 ? 231 : 250), k.height() - 80),
+    k.pos(20, k.height() - 138),
     "healthPercentage",
   ]);
 }
@@ -124,11 +107,23 @@ function coins(k) {
   const coins = playerState.getCoins();
 
   k.add([
-    k.text(`Coins: ${coins}`, {
+    k.sprite("assets", {
+      width: 50,
+      height: 50,
+      frame: 969,
+      anim: 'coin-anim',
+    }),
+    k.pos(0, k.height() - 215),
+    k.fixed(),
+    "coinsContainer",
+  ]);
+
+  k.add([
+    k.text(coins, {
       size: 16,
       font: "gameboy",
     }),
-    k.pos(20, k.height() - 80),
+    k.pos(45, k.height() - 199),
     k.fixed(),
     "coinsContainer",
   ]);
@@ -281,4 +276,19 @@ function sideSlots(k) {
     k.fixed(),
     k.pos(0, k.height() / 3),
   ], 'sideSlotsContainer');
+}
+
+function backgroundUnits(k) {
+  k.destroyAll("backgroundUnits");
+
+  k.add([
+    k.sprite("backgroundUnits", {
+      width: 360,
+      height: 170,
+    }),
+    k.pos(0, k.height() - 160),
+    k.fixed(),
+    k.opacity(0.8),
+    "backgroundUnits",
+  ]);
 }
