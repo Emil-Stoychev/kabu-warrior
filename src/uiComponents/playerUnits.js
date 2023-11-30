@@ -277,7 +277,7 @@ function sideSlots(k) {
       height: 220
     }),
     k.anchor('topleft'),
-    k.opacity(0.5),
+    k.opacity(0.9),
     k.fixed(),
     k.pos(0, k.height() / 3),
   ], 'sideSlotsContainer');

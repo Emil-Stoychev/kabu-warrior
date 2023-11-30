@@ -526,6 +526,6 @@ export default async function world(k) {
 
   healthBar(k);
   k.destroyAll("weaponsContainer");
-  weapons(k);
   playerUnits(k, player);
+  weapons(k);
 }
