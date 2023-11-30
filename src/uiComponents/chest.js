@@ -9,10 +9,12 @@ export async function chest(k, player) {
   let items = [];
 
   let backpack = k.add([
-    k.rect(600, 300),
-    k.color(100, 100, 100),
+    k.sprite("upgradeImg", {
+      width: 680,
+      height: 340,
+    }),
     k.fixed(),
-    k.pos(k.vec2(k.width() / 2 - 300, k.height() / 2 - 150)),
+    k.pos(k.vec2(k.width() / 2 - 320, k.height() / 2 - 230)),
     "backpack",
   ]);
 
@@ -24,7 +26,7 @@ export async function chest(k, player) {
           width: 100,
           height: 100,
         }),
-        k.area({ shape: new k.Rect(k.vec2(3, 4), 100, 100) }),
+        k.area({ shape: new k.Rect(k.vec2(3, 4), 100, 170) }),
         k.fixed(),
         k.pos(k.vec2(x, y)), // Centered position
         k.z(100),
@@ -40,7 +42,7 @@ export async function chest(k, player) {
           font: "gameboy",
         }),
         k.fixed(),
-        k.pos(k.vec2(x, y + 110)), // Centered position
+        k.pos(k.vec2(x, y + 100)), // Centered position
         k.z(100),
       ],
       "backpack"
@@ -48,12 +50,12 @@ export async function chest(k, player) {
 
     let priceText = k.add(
       [
-        k.text(`${price == 10 ? '10 Coins' : price}`, {
+        k.text(`${price == 10 ? '10 C' : price}`, {
           size: 15,
           font: "gameboy",
         }),
         k.fixed(),
-        k.pos(k.vec2(x, y + 140)), // Centered position
+        k.pos(k.vec2(x + 20, y + 150)), // Centered position
         k.z(100),
       ],
       "backpack"
@@ -131,7 +133,7 @@ export async function chest(k, player) {
       }),
       k.area({ shape: new k.Rect(k.vec2(0, 0), 60, 20) }),
       k.fixed(),
-      k.pos(k.vec2(k.width() / 2 - 30, k.height() / 2 + 120)),
+      k.pos(k.vec2(k.width() / 2 + 285, k.height() / 2 - 175)),
       k.z(100),
     ],
     "backpack"
@@ -149,9 +151,9 @@ export async function chest(k, player) {
     gameState.setFreezePlayer(false);
   });
 
-  createItem(140, k.width() / 2 - 200, k.height() / 2 - 100, "Health +1", 10);
-  createItem(141, k.width() / 2 - 50, k.height() / 2 - 100, "Speed +10", spe == 0 ? 100 + ' Coins' : spe == 10 ? 250 + ' Coins' : spe == 20 ? 500 + ' Coins' : 'MAXED');
-  createItem(139, k.width() / 2 + 100, k.height() / 2 - 100, "Armor +1", arm == 1 ? 100 + ' Coins' : arm == 2 ? 250 + ' Coins' : arm == 3 ? 500 + ' Coins' : 'MAXED');
+  createItem(140, k.width() / 2 - 250, k.height() / 2 - 110, "Health +1", 10);
+  createItem(141, k.width() / 2 - 30, k.height() / 2 - 110, "Speed +10", spe == 0 ? 100 + ' Coins' : spe == 10 ? 250 + ' Coins' : spe == 20 ? 500 + ' Coins' : 'MAXED');
+  createItem(139, k.width() / 2 + 190, k.height() / 2 - 110, "Armor +1", arm == 1 ? 100 + ' Coins' : arm == 2 ? 250 + ' Coins' : arm == 3 ? 500 + ' Coins' : 'MAXED');
 }
 
 function refreshItemsPrice(items) {

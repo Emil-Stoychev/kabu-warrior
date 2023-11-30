@@ -18,7 +18,7 @@ export async function missions(k) {
 
   let missionContainer = k.add([
     k.rect(800, 300),
-    k.color(100, 100, 100),
+    k.color(10, 10, 10),
     k.fixed(),
     k.pos(k.vec2(k.width() / 2 - 400, k.height() / 2 - 150)),
     "missionContainer",
@@ -112,7 +112,7 @@ export async function missions(k) {
         }),
         k.area({ shape: new k.Rect(k.vec2(3, 4), 100, 100) }),
         k.fixed(),
-        k.pos(k.vec2(k.width() / 2 + 240, k.height() / 2 - 60)), // Centered position
+        k.pos(k.vec2(k.width() / 2 + 235, k.height() / 2 - 60)), // Centered position
         k.z(100),
         "collect",
       ],
