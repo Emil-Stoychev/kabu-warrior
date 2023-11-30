@@ -11,7 +11,7 @@ import { gameState, playerState } from "../state/stateManagers.js";
 import { showDamage } from "../uiComponents/damage.js";
 import { dialog } from "../uiComponents/dialog.js";
 import { healthBar } from "../uiComponents/healthBar.js";
-import { currMission, playerUnits } from "../uiComponents/playerUnits.js";
+import { currMission, playerUnits, sideSlots } from "../uiComponents/playerUnits.js";
 import { weapons } from "../uiComponents/weapons.js";
 import {
   colorizeBackground,
@@ -143,6 +143,7 @@ export default async function house(k) {
   })
 
   k.destroyAll("weaponsContainer");
+  sideSlots(k)
   playerUnits(k, player)
   weapons(k);
   healthBar(k);

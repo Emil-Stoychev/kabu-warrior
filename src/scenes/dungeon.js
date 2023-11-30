@@ -12,7 +12,7 @@ import { gameState, playerState } from "../state/stateManagers.js";
 import { comingSoon } from "../uiComponents/centerTexts.js";
 import { dialog } from "../uiComponents/dialog.js";
 import { healthBar } from "../uiComponents/healthBar.js";
-import { currMission, playerUnits } from "../uiComponents/playerUnits.js";
+import { currMission, playerUnits, sideSlots } from "../uiComponents/playerUnits.js";
 import { weapons } from "../uiComponents/weapons.js";
 import {
   colorizeBackground,
@@ -257,6 +257,7 @@ export default async function dungeon(k) {
   })
 
   k.camScale(4);
+  sideSlots(k)
   k.destroyAll("weaponsContainer");
   playerUnits(k, player);
   weapons(k);

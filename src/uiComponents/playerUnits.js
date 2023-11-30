@@ -8,7 +8,6 @@ export async function playerUnits(k, player) {
   attackPowerUnit(k);
   healthPercentage(k, player);
   speed(k);
-  sideSlots(k)
 }
 
 function armor(k) {
@@ -263,7 +262,7 @@ function attackLevelUp(k) {
   });
 }
 
-function sideSlots(k) {
+export function sideSlots(k) {
   k.destroyAll("sideSlotsContainer");
 
   k.add([
@@ -282,7 +281,7 @@ function backgroundUnits(k) {
   k.destroyAll("backgroundUnits");
 
   k.add([
-    k.sprite("backgroundUnits", {
+    k.sprite("backgroundUnitsImg", {
       width: 360,
       height: 170,
     }),

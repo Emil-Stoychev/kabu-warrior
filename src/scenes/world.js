@@ -24,7 +24,7 @@ import {
 } from "../utils.js";
 import { weapons } from "../uiComponents/weapons.js";
 import { bossLocked, comingSoon } from "../uiComponents/centerTexts.js";
-import { currMission, playerUnits } from "../uiComponents/playerUnits.js";
+import { currMission, playerUnits, sideSlots } from "../uiComponents/playerUnits.js";
 import { chest } from "../uiComponents/chest.js";
 import sonLines from "../content/sonDialogue.js";
 import { dialog } from "../uiComponents/dialog.js";
@@ -524,6 +524,7 @@ export default async function world(k) {
     }
   });
 
+  sideSlots(k)
   healthBar(k);
   k.destroyAll("weaponsContainer");
   playerUnits(k, player);
