@@ -135,11 +135,11 @@ function enemiesKilled(k) {
 
   k.add(
     [
-      k.text(`Enemies: ${enemiesKilled}`, { size: 24, font: "gameboy" }),
+      k.text(`Enemies: ${enemiesKilled}`, { size: 16, font: "gameboy" }),
       k.area(),
       k.anchor("topright"),
       k.fixed(),
-      k.pos(k.width() - 20, 20),
+      k.pos(k.width() - 40, 20),
       "enemiesKilledCount",
     ],
     "enemiesKilledCount"
