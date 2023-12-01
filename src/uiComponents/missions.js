@@ -17,8 +17,10 @@ export async function missions(k) {
   let items = [];
 
   let missionContainer = k.add([
-    k.rect(800, 300),
-    k.color(10, 10, 10),
+    k.sprite('backgroundMissions', {
+      width: 800,
+      height: 310
+    }),
     k.fixed(),
     k.pos(k.vec2(k.width() / 2 - 400, k.height() / 2 - 150)),
     "missionContainer",
@@ -34,7 +36,7 @@ export async function missions(k) {
           height: 50,
         }),
         k.fixed(),
-        k.pos(k.vec2(k.width() / 2 - 390, k.height() / 2 - 140)), // Centered position
+        k.pos(k.vec2(k.width() / 2 - 390, k.height() / 2 - 125)), // Centered position
         k.z(100),
         "item",
       ],
@@ -50,7 +52,7 @@ export async function missions(k) {
           flipX: true,
         }),
         k.fixed(),
-        k.pos(k.vec2(k.width() / 2 - 380, k.height() / 2 - 140)), // Centered position
+        k.pos(k.vec2(k.width() / 2 - 380, k.height() / 2 - 125)), // Centered position
         k.z(100),
         "item",
       ],
@@ -65,7 +67,7 @@ export async function missions(k) {
           height: 50,
         }),
         k.fixed(),
-        k.pos(k.vec2(k.width() / 2 + 330, k.height() / 2 - 140)), // Centered position
+        k.pos(k.vec2(k.width() / 2 + 330, k.height() / 2 - 125)), // Centered position
         k.z(100),
         "item",
       ],
@@ -81,7 +83,7 @@ export async function missions(k) {
           flipX: true,
         }),
         k.fixed(),
-        k.pos(k.vec2(k.width() / 2 + 340, k.height() / 2 - 140)), // Centered position
+        k.pos(k.vec2(k.width() / 2 + 340, k.height() / 2 - 125)), // Centered position
         k.z(100),
         "item",
       ],
@@ -96,7 +98,7 @@ export async function missions(k) {
           font: "gameboy",
         }),
         k.fixed(),
-        k.pos(k.vec2(k.width() / 2 - 70, k.height() / 2 - 120)), // Centered position
+        k.pos(k.vec2(k.width() / 2 - 70, k.height() / 2 - 110)), // Centered position
         k.z(100),
       ],
       "missionContainer"
@@ -126,7 +128,7 @@ export async function missions(k) {
           font: "gameboy",
         }),
         k.fixed(),
-        k.pos(k.vec2(k.width() / 2 - 330, k.height() / 2 - 30)), // Centered position
+        k.pos(k.vec2(k.width() / 2 - 360, k.height() / 2 - 30)), // Centered position
         k.z(100),
       ],
       "missionContainer"
@@ -139,7 +141,7 @@ export async function missions(k) {
           font: "gameboy",
         }),
         k.fixed(),
-        k.pos(k.vec2(k.width() / 2 - 330, k.height() / 2 + 50)), // Centered position
+        k.pos(k.vec2(k.width() / 2 - 360, k.height() / 2 + 50)), // Centered position
         k.z(100),
       ],
       "missionContainer"

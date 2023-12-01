@@ -170,6 +170,7 @@ k.loadSpriteAtlas("./assets/topdownasset.png", {
 
 k.loadSprite('backgroundUnitsImg', '../../assets/images/backgroundUnits.png')
 k.loadSprite('upgradeImg', '../../assets/images/upgradeImg.png')
+k.loadSprite('backgroundMissions', '../../assets/images/backgroundMissions.png')
 k.loadSprite('playerImg', '../../assets/images/playerImg.png')
 k.loadSprite('bunny', '../../assets/images/bunny.png')
 k.loadSprite('frog', '../../assets/images/frog.png')
